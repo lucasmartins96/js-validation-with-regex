@@ -1,4 +1,22 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const HeaderWrapper = styled.header`
+  border: 1px solid black;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 40vh;
+  
+  h1 {
+    text-align: center;
+  }
+
+  ul {
+    list-style-position: inside;
+  }
+`;
 
 function Header() {
   return (
