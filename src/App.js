@@ -6,8 +6,8 @@ import PostForm from "./pages/PostForm";
 function App() {
   return (
     <Switch>
-      <Route exact="/" component={ Home }/>
-      <Route exact="/postform" component={ PostForm }/>
+      <Route path="/" component={ Home }/>
+      <Route exact path="/postform" component={ PostForm }/>
     </Switch>
   );
 }
