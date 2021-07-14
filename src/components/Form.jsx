@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const MyForm = styled.form`
@@ -18,32 +18,28 @@ const MyForm = styled.form`
   }
 `;
 
-class Form extends Component {
-  constructor() {
-    super();
-    this.state = {
-      nickname: '',
-      email: '',
-      password: '',
-      fieldsError: {
-        nickname: false,
-        email: false,
-        password: false,
-      },
-    };
-    this.nicknameField = this.nicknameField.bind(this);
-    this.emailField = this.emailField.bind(this);
-    this.passwordField = this.passwordField.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.buttonSubmit = this.buttonSubmit.bind(this);
+function Form () {
+  const INITIAL_STATE_FORM_DATA = {
+    nickname: '',
+    email: '',
+    password: '',
+  }
+  
+  const INITIAL_STATE_FIELDS_ERROR = {
+    isNicknameError: false,
+    isEmailError: false,
+    isPasswordError: false,
+  }
+  const [formData, setFormData] = useState(INITIAL_STATE_FORM_DATA);
+  const [fieldsError] = useState(INITIAL_STATE_FIELDS_ERROR);
+
+  const handleChange = ({ target: { name, value } }) => {
+    setFormData({ ...formData, [name]: value });
   }
 
-  handleChange({ target: { name, value } }) {
-    this.setState({ [name]: value });
-  }
-
-  nicknameField() {
-    const { nickname, fieldsError } = this.state;
+  const nicknameField = () => {
+    const { nickname } = formData;
+    const { isNicknameError } = fieldsError;
     return (
       <>
         <label htmlFor="nickname">
@@ -53,16 +49,17 @@ class Form extends Component {
             name="nickname"
             id="nickname"
             value={nickname}
-            onChange={this.handleChange}
+            onChange={handleChange}
           />
         </label>
-        <div>{fieldsError.nickname && 'insira somente letras sem espaços'}</div>
+        <div>{isNicknameError && 'insira somente letras sem espaços'}</div>
       </>
     );
   }
 
-  emailField() {
-    const { email, fieldsError } = this.state;
+  const emailField = () => {
+    const { email } = formData;
+    const { isEmailError } = fieldsError;
     return (
       <>
         <label htmlFor="email">
@@ -72,16 +69,17 @@ class Form extends Component {
             name="email"
             id="email"
             value={email}
-            onChange={this.handleChange}
+            onChange={handleChange}
           />
         </label>
-        <div>{fieldsError.email && 'insira apenas endereços de e-mail do gmail'}</div>
+        <div>{isEmailError && 'insira apenas endereços de e-mail do gmail'}</div>
       </>
     );
   }
 
-  passwordField() {
-    const { password, fieldsError } = this.state;
+  const passwordField = () => {
+    const { password } = formData;
+    const { isPasswordError } = fieldsError;
     return (
       <>
         <label htmlFor="password">
@@ -89,15 +87,15 @@ class Form extends Component {
           <input type="password" name="password" id="password" value={password} />
         </label>
         <div>
-          {fieldsError.password &&
+          {isPasswordError &&
             'a senha deve ter cinco (5) letras maiúsculas, seis (6) símbolos e dois hifens(-)'}
         </div>
       </>
     );
   }
 
-  buttonSubmit() {
-    // const { nickname, email, password, fieldsError } = this.state;
+  const buttonSubmit = () => {
+    // const { nickname, email, password, fieldsError } = state;
     const handleSubmit = () => {
       
     };
@@ -109,16 +107,14 @@ class Form extends Component {
     );
   }
 
-  render() {
-    return (
-      <MyForm>
-        {this.nicknameField()}
-        {this.emailField()}
-        {this.passwordField()}
-        {this.buttonSubmit()}
-      </MyForm>
-    );
-  }
+  return (
+    <MyForm>
+      {nicknameField()}
+      {emailField()}
+      {passwordField()}
+      {buttonSubmit()}
+    </MyForm>
+  );
 }
 
 export default Form;
